@@ -20,3 +20,6 @@
 
 # Distribution folder
 dist/
+
+# Test folder
+test/
