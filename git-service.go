@@ -14,9 +14,9 @@ func GitLog(directory string, formatter string) (string, error) {
 	color.Green("Pulling the history: %s", directory)
 
 	commandName := "git"
-	arg := "--pretty=format:" + formatter
+	customFormatter := "--pretty=format:" + formatter
 
-	args := []string{"log", arg}
+	args := []string{"log", customFormatter}
 
 	command := execCommand(commandName, args...)
 	command.Dir = directory
