@@ -15,6 +15,9 @@ func main() {
 	if err != nil {
 		color.Red("Exiting...")
 	}
+	repository, err := GetRepository(directory)
 
 	fmt.Println(log)
+	fmt.Println(repository)
+
 }

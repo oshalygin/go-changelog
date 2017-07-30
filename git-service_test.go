@@ -158,5 +158,14 @@ func Test_GitService(t *testing.T) {
 			g.Assert(actual).Equal(expected)
 		})
 
+		g.It("should return an empty string when calling getRepositoryURL if the remote does not include http or git", func() {
+
+			expected := ""
+			remote := "foobar"
+
+			actual := getRepositoryURL(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
 	})
 }

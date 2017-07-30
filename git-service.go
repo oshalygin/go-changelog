@@ -39,22 +39,24 @@ func prependGitHubDomain(path string) string {
 }
 
 func trimGitSuffix(path string) string {
-	return strings.TrimSuffix(path, ".git")
+	return strings.Split(path, ".git")[0]
 }
 
 func getRepositoryURL(remote string) string {
 	if strings.HasPrefix(remote, "https") {
 		return trimGitSuffix(remote)
 	}
-	return prependGitHubDomain(trimGitSuffix(strings.Split(remote, ".com:")[1]))
+	if strings.HasPrefix(remote, "git") {
+		return prependGitHubDomain(trimGitSuffix(strings.Split(remote, ".com:")[1]))
+	}
+	return ""
 }
 
 // GetRepository returns the origin repository path, eg: https://github.com/oshalygin/go-changelog
 func GetRepository(directory string) (string, error) {
 
 	commandName := "git"
-	// args := []string{"config", "--get", "remote.origin.url"}
-	args := []string{"log"}
+	args := []string{"config", "--get", "remote.origin.url"}
 
 	command := execCommand(commandName, args...)
 	command.Dir = directory
@@ -67,6 +69,6 @@ func GetRepository(directory string) (string, error) {
 	}
 
 	remote := string(output[:])
-	return remote, nil
+	return getRepositoryURL(remote), nil
 
 }
