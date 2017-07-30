@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os/exec"
-	"strings"
 
 	"github.com/fatih/color"
 )
@@ -31,25 +30,6 @@ func GitLog(directory string, formatter string) (string, error) {
 
 	log := string(output[:])
 	return log, nil
-}
-
-func prependGitHubDomain(path string) string {
-	githubDomain := "https://github.com/"
-	return githubDomain + path
-}
-
-func trimGitSuffix(path string) string {
-	return strings.Split(path, ".git")[0]
-}
-
-func getRepositoryURL(remote string) string {
-	if strings.HasPrefix(remote, "https") {
-		return trimGitSuffix(remote)
-	}
-	if strings.HasPrefix(remote, "git") {
-		return prependGitHubDomain(trimGitSuffix(strings.Split(remote, ".com:")[1]))
-	}
-	return ""
 }
 
 // GetRepository returns the origin repository path, eg: https://github.com/oshalygin/go-changelog
