@@ -14,6 +14,7 @@ var passedInArgs []string
 
 // From Go's source code
 // https://golang.org/src/os/exec/exec_test.go
+
 func fakeExecCommand(command string, args ...string) *exec.Cmd {
 
 	passedInCommand = command
@@ -23,6 +24,7 @@ func fakeExecCommand(command string, args ...string) *exec.Cmd {
 	cs = append(cs, args...)
 	cmd := exec.Command(os.Args[0], cs...)
 	cmd.Env = []string{"GO_WANT_HELPER_PROCESS=1"}
+
 	return cmd
 }
 
