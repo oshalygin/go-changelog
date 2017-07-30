@@ -9,7 +9,7 @@ import (
 const directory string = "."
 
 func main() {
-	formatter := `commit:       %H%nAuthor:       %ae%nAuthor Date:  %cd%n%n`
+	formatter := `commit:       %H%nAuthor:       %ae%nAuthor Date:  %cd%n%n%s%n%n%b`
 	log, err := GitLog(directory, formatter)
 
 	if err != nil {

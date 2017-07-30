@@ -96,5 +96,65 @@ func Test_GitService(t *testing.T) {
 			g.Assert(actual).Equal(expected)
 		})
 
+		g.It("should call the git command when calling GetRepository", func() {
+
+			expected := "git"
+			execCommand = fakeExecCommand
+			defer func() {
+				execCommand = exec.Command
+			}()
+
+			directory := "."
+			GetRepository(directory)
+
+			actual := passedInCommand
+			g.Assert(actual).Equal(expected)
+		})
+
+		g.It("should return the string `https://github.com/oshalygin/go-changelog` when passing `https://github.com/oshalygin/go-changelog.git` to trimGitSuffix", func() {
+
+			expected := "https://github.com/oshalygin/go-changelog"
+			remote := "https://github.com/oshalygin/go-changelog.git"
+
+			actual := trimGitSuffix(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
+		g.It("should return the string `oshalygin/go-changelog` when passing `oshalygin/go-changelog.git` to trimGitSuffix", func() {
+
+			expected := "oshalygin/go-changelog"
+			remote := "oshalygin/go-changelog.git"
+
+			actual := trimGitSuffix(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
+		g.It("should prepend `https://github.com/` to `oshalygin/go-changelog` and return `https://github.com/oshalygin/go-changelog` when calling prependGitHubDomain", func() {
+
+			expected := "https://github.com/oshalygin/go-changelog"
+			remote := "oshalygin/go-changelog"
+
+			actual := prependGitHubDomain(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
+		g.It("should return the string `https://github.com/oshalygin/go-changelog` when passing `https://github.com/oshalygin/go-changelog.git` to getRepositoryURL", func() {
+
+			expected := "https://github.com/oshalygin/go-changelog"
+			remote := "https://github.com/oshalygin/go-changelog.git"
+
+			actual := getRepositoryURL(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
+		g.It("should return the string `https://github.com/oshalygin/go-changelog` when passing `git@github.com:oshalygin/go-changelog.git` to getRepositoryURL", func() {
+
+			expected := "https://github.com/oshalygin/go-changelog"
+			remote := "git@github.com:oshalygin/go-changelog.git"
+
+			actual := getRepositoryURL(remote)
+			g.Assert(actual).Equal(expected)
+		})
+
 	})
 }
